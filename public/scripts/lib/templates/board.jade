@@ -1,0 +1,75 @@
+style.
+    #boardContainer {
+    }
+    svg.board {
+        width: 500px;
+        height: 500px;
+        display: inline-block;
+        position: relative;
+        background-image: url(/images/wood.jpg);
+        border-style: inset;
+        border-color: brown;
+        border-width: 5px;
+        border-radius: 3px;
+    }
+    .gridVertex line {
+        stroke: #000000;
+        stroke-width: 2;
+    }
+    svg.board .gridVertex {
+        position: absolute;
+        display: inline-block;
+        overflow: visible;
+    }
+- var squareWidth = 100 / locals.board.size + '%';
+- for ( var i = 0; i < locals.board.size; i++ ) {
+    - var percentX = 100 * i / locals.board.size + '%';
+    - for (var j = 0; j < locals.board.size; j++) {
+        - var percentY = 100 * j / locals.board.size + '%';
+        svg.gridVertex(
+            style="top: #{percentY}; left: #{percentX};",
+            //x="#{percentX}",
+            //y="#{percentY}",
+            width="#{squareWidth}",
+            height="#{squareWidth}",
+            data-x="#{i}",
+            data-y="#{j}")
+            // draw the piece if it is present
+            // ----- template code here
+            // draw the lines for each grid item
+            - if (i != 0)
+                line(
+                    x1="50%",
+                    y1="50%",
+                    x2="-0.5%",
+                    y2="50%")
+            - if (i + 1 != locals.board.size)
+                line(
+                    x1="50%",
+                    y1="50%",
+                    x2="100.5%",
+                    y2="50%")
+            - if (j != 0)
+                line(
+                    x1="50%",
+                    y1="50%",
+                    x2="50%",
+                    y2="-0.5%")
+            - if (j + 1 != locals.board.size)
+                line(
+                    x1="50%",
+                    y1="50%",
+                    x2="50%",
+                    y2="100.5%")
+            // draw the piece for this position
+            - if (locals.board.grid[i][j])
+                circle(
+                    fill="#{locals.board.grid[i][j]}",
+                    cx="50%",
+                    cy="50%",
+                    r="48%")
+    - }
+- }
+            
+
+

@@ -9,7 +9,8 @@
  *  The board calculates territory and influence
  *  for use in determining the score.
  */
-function Board( size, player1, player2 ) {
+// TODO: change this to an implementation of Backbone.Model.extend({...})
+function boardProt( size ) {
     // set self variable for continued use
     var self = this;
 
@@ -18,6 +19,7 @@ function Board( size, player1, player2 ) {
     for ( var i = 0; i < size; i++) {
         self.grid[i] = new Array(size);
     };
+    self.size = size;
 
     self.states = {};
 
@@ -34,8 +36,27 @@ function Board( size, player1, player2 ) {
         }
     };
 
+    self.placePiece = function(player, x, y) {
+        self.grid[x][y] = player.getColor();
+        self.assessTerritory();
+        window.GO.game.nextTurn();
+        this.trigger('piecePlaced');
+    };
+    
+    self.assessTerritory = function() {
+        // assess the territory and remove pieces as necessary
+    };
+
     self.setBoardState = function(stateString) {
         
     };
-
 }
+
+define(['backbone'], function(Backbone) {
+    window.bprot = new boardProt(9);
+    var options = {};
+    var Board = Backbone.Model.extend( bprot, options );
+    return {
+        Board: Board
+    };
+});

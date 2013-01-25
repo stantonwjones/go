@@ -7,9 +7,25 @@
  *      place a piece
  *      pass the turn
  */
+/*
 function Player( number ) {
     var self = this;
 
     self.number = number;
     
 }
+*/
+define( ['backbone'], function(Backbone) {
+    var Player = Backbone.Model.extend({
+        getColor: function() {
+            return this.get('playerNum') ? 'white' : 'black';
+        },
+        canMove: false,
+        placePiece: function(board, x, y) {
+            board.placePiece( this, x, y );
+        }
+    });
+    return {
+        Player: Player
+    };
+});

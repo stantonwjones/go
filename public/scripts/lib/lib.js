@@ -1,8 +1,6 @@
-define([ board.js, game.js, player.js, stone.js ], function(board, game, player, stone) {
+define([ './models/models', './views/views' ], function( models, views ) {
     return {
-        Board: board,
-        Game: game,
-        Player: player,
-        Stone: stone
+        models: models,
+        views: views
     }
 })
