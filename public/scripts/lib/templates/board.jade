@@ -21,15 +21,15 @@ style.
         display: inline-block;
         overflow: visible;
     }
-- var squareWidth = 100 / locals.board.size + '%';
-- for ( var i = 0; i < locals.board.size; i++ ) {
-    - var percentX = 100 * i / locals.board.size + '%';
-    - for (var j = 0; j < locals.board.size; j++) {
-        - var percentY = 100 * j / locals.board.size + '%';
+- var colors = ['black', 'white'];
+- var size = locals.board.get('size');
+- var squareWidth = 100 / size + '%';
+- for ( var i = 0; i < size; i++ ) {
+    - var percentX = 100 * i / size + '%';
+    - for (var j = 0; j < size; j++) {
+        - var percentY = 100 * j / size + '%';
         svg.gridVertex(
             style="top: #{percentY}; left: #{percentX};",
-            //x="#{percentX}",
-            //y="#{percentY}",
             width="#{squareWidth}",
             height="#{squareWidth}",
             data-x="#{i}",
@@ -43,7 +43,7 @@ style.
                     y1="50%",
                     x2="-0.5%",
                     y2="50%")
-            - if (i + 1 != locals.board.size)
+            - if (i + 1 != size)
                 line(
                     x1="50%",
                     y1="50%",
@@ -55,7 +55,7 @@ style.
                     y1="50%",
                     x2="50%",
                     y2="-0.5%")
-            - if (j + 1 != locals.board.size)
+            - if (j + 1 != size)
                 line(
                     x1="50%",
                     y1="50%",
@@ -64,7 +64,7 @@ style.
             // draw the piece for this position
             - if (locals.board.grid[i][j])
                 circle(
-                    fill="#{locals.board.grid[i][j]}",
+                    fill="#{colors[(locals.board.grid[i][j] - 1)]}",
                     cx="50%",
                     cy="50%",
                     r="48%")

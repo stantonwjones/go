@@ -14,6 +14,13 @@ requirejs.config({
 });
 
 requirejs(['backbone', 'lib/lib'], function(Backbone, lib) {
+    var GO = {};
+    window.GO = GO;
+    // TODO: refractor all of the following into
+    //  an 'app' module for central app logic
+    GO.dispatcher = _.extend({}, Backbone.Events);
+    // use the dispatcher to dispense application actions
+    // change the below to local vars after test is finished
     window.models = lib.models;
     window.views = lib.views;
     window.board = new models.Board();
@@ -24,9 +31,24 @@ requirejs(['backbone', 'lib/lib'], function(Backbone, lib) {
     window.player2 = new lib.models.Player({
         playerNum: 1
     });
-    window.GO = {};
-    GO.game = new lib.models.Game({
+    window.game = new lib.models.Game({
         players: [player1, player2]
+    });
+    GO.game = game;
+    GO.dispatcher.on('placePiece', function(options) {
+        GO.game.get('currentPlayer')
+            .placePiece( board, options.x, options.y );
+    });
+    GO.dispatcher.on('render', function() {
+        boardView.render();
+    });
+    GO.dispatcher.listenTo(board, 'piecePlaced', function() {
+        GO.dispatcher.trigger('render');
+        game.nextTurn();
+    });
+    GO.dispatcher.listenTo(boardView, 'placePiece', function(coords) {
+        GO.game.get('currentPlayer')
+            .placePiece( board, coords.x, coords.y );
     });
     boardView.render();
 });
