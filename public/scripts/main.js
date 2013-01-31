@@ -23,7 +23,9 @@ requirejs(['backbone', 'lib/lib'], function(Backbone, lib) {
     // change the below to local vars after test is finished
     window.models = lib.models;
     window.views = lib.views;
-    window.board = new models.Board();
+    window.board = new models.Board({
+        size: 13
+    });
     window.boardView = new views.Board({model: board});
     window.player1 = new lib.models.Player({
         playerNum: 0
